@@ -1,0 +1,3 @@
+#!/bin/sh
+
+code-oss --enable-features=UseOzonePlatform --ozone-platform=wayland --extensions-dir $HOME/dotfiles/vs-code/extensions-dir --user-data-dir $HOME/dotfiles/vs-code/data-dir

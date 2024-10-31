@@ -1,0 +1,114 @@
+@define-color background #000000;
+@define-color foreground #ffffff;
+@define-color focused #ffffff;
+@define-color occupied #808080;
+@define-color urgent #f7768e;
+
+* {
+  border: none;
+  border-radius: 8px;
+  font-family: "Roboto Mono", "Font Awesome 6 Free";
+  font-size: 15px;
+  background-color: @background;
+  font-weight: 400;
+  padding: 0;
+  margin: 0;
+}
+
+window#waybar {
+  color: @foreground;
+}
+
+#clock {
+  background-color: @background;
+  padding: 0px 5px 0px 9px;
+  margin-left: 4px;
+  border-bottom: 2px solid @foreground;
+
+}
+
+#window {
+  background-color: @background;
+  padding: 0px 8px 0px 8px;
+  margin-left: 4px;
+  border-bottom: 2px solid @foreground;
+}
+
+#hardware {
+  border-top: 2px solid @foreground;
+}
+
+#battery {
+  margin-left: 19px
+}
+
+#bluetooth {
+  margin-left: 19px
+}
+
+#wireplumber {
+  margin-left: 11px
+}
+
+#temperature {
+  margin-left: 9px
+}
+
+#backlight {
+  margin-left: 19px
+}
+
+#tray {
+  background-color: @background;
+  padding: 3px 8px 3px 9px;
+  margin-left: 4px;
+  border-bottom: 2px solid @foreground;
+}
+
+#mpris {
+  border-top: 2px solid @foreground;
+  padding: 3px 8px 3px 9px;
+}
+
+#tags {
+  background-color: @background;
+  padding: 0px 0px;
+  color: @occupied;
+  border-top: 2px solid @foreground;
+}
+
+tooltip,
+#clock.calendar,
+#clock tooltip,
+#clock > tooltip,
+#clock {
+    background: @background;
+}
+
+#tags button {
+  color: @occupied;
+  margin: 0px 4px;
+  padding: 0px 2px;
+}
+
+#tags button:hover {
+  box-shadow: inherit;
+  text-shadow: inherit;
+  background: inherit;
+}
+
+#tags button.occupied {
+  color: @occupied;
+  font-weight: 800;
+  border-top: 2px solid @foreground;
+}
+
+#tags button.focused {
+  color: @foreground;
+  border-bottom: 2px solid @foreground;
+}
+
+#tags button.urgent {
+  color: @urgent;
+}
+

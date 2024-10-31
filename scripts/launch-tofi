@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# Run Tofi and capture the selected program name
+program=$(tofi-run)
+
+# Check if a program was selected
+if [ -n "$program" ]; then
+    # Run the selected program
+    $program &
+fi
+

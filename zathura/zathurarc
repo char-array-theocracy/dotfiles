@@ -1,0 +1,23 @@
+set adjust-open "best-fit"
+
+set recolor true
+set recolor-keephue true
+set recolor-lightcolor "#1c1c1c"
+set recolor-darkcolor "#ffffff"
+
+set statusbar-bg "#282828"
+set statusbar-fg "#ebdbb2"
+set inputbar-bg "#282828"
+set inputbar-fg "#ebdbb2"
+
+set selection-clipboard clipboard
+map zi zoom in
+map zo zoom out
+map z0 zoom 1.0
+map r rotate 90
+map R rotate 270
+map <C-r> set recolor
+
+set highlight-color "rgba(0, 120, 255, 0.3)"
+
+set render-loading true
