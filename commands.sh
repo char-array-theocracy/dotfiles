@@ -37,19 +37,25 @@ ln -s /etc/sv/bluetoothd /var/service/
 
 # Downloading anki and picard, adding them to binaries
 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-flatpak install -y flathub net.ankiweb.Anki com.github.tchx84.Flatseal md.obsidian.Obsidian org.wireshark.Wireshark
+flatpak install -y flathub net.ankiweb.Anki com.github.tchx84.Flatseal md.obsidian.Obsidian org.wireshark.Wireshark org.openhantek.OpenHantek6022
 ln -s /var/lib/flatpak/exports/bin/net.ankiweb.Anki /usr/bin/anki
 ln -s /var/lib/flatpak/exports/bin/com.github.tchx84.Flatseal /usr/bin/flatseal
 ln -s /var/lib/flatpak/exports/bin/md.obsidian.Obsidian /usr/bin/obsidian
 ln -s /var/lib/flatpak/exports/bin/org.wireshark.Wireshark /usr/bin/wireshark
+ln -s /var/lib/flatpak/exports/bin/org.openhantek.OpenHantek6022 /usr/bin/hantek
 
+# Fix for hantek wayland
+flatpak override --user --env=QT_QPA_PLATFORM=wayland org.openhantek.OpenHantek6022
+
+# OpenHantek6022 udev fix
+mkdir -p /etc/udev/rules.d/
+cp /home/$username/dotfiles/resources/60-openhantek.rules /etc/udev/rules.d/
 
 # Install custom fonts
 mv /home/$username/dotfiles/fonts/*.ttf /usr/share/fonts/TTF/
 
 # Force wayland on all apps
 sed -i 's|exec /usr/bin/flatpak run|exec /usr/bin/flatpak run --socket=wayland|g' /var/lib/flatpak/exports/bin/*
-
 
 # Disabling bitmaps
 ln -s /usr/share/fontconfig/conf.avail/70-no-bitmaps.conf /etc/fonts/conf.d/

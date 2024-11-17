@@ -27,6 +27,9 @@ shopt -s checkwinsize
 shopt -s histappend
 PROMPT_COMMAND='history -a'
 
+# GPG
+export GPG_TTY=$(tty)
+
 # Alias's to modified commands
 alias yt-mp3='yt-dlp -f bestaudio --extract-audio --audio-quality 0 --audio-format mp3 -o "%(playlist_index)02d - %(title)s.%(ext)s"'
 alias update-all='sudo xbps-install -Su && flatpak update'
