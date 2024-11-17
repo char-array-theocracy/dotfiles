@@ -37,12 +37,13 @@ ln -s /etc/sv/bluetoothd /var/service/
 
 # Downloading anki and picard, adding them to binaries
 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-flatpak install -y flathub net.ankiweb.Anki com.github.tchx84.Flatseal md.obsidian.Obsidian org.wireshark.Wireshark org.openhantek.OpenHantek6022
+flatpak install -y flathub net.ankiweb.Anki com.github.tchx84.Flatseal md.obsidian.Obsidian org.wireshark.Wireshark org.openhantek.OpenHantek6022 org.torproject.torbrowser-launcher
 ln -s /var/lib/flatpak/exports/bin/net.ankiweb.Anki /usr/bin/anki
 ln -s /var/lib/flatpak/exports/bin/com.github.tchx84.Flatseal /usr/bin/flatseal
 ln -s /var/lib/flatpak/exports/bin/md.obsidian.Obsidian /usr/bin/obsidian
 ln -s /var/lib/flatpak/exports/bin/org.wireshark.Wireshark /usr/bin/wireshark
 ln -s /var/lib/flatpak/exports/bin/org.openhantek.OpenHantek6022 /usr/bin/hantek
+ln -s /var/lib/flatpak/exports/bin/org.torproject.torbrowser-launcher /usr/bin/torbrowser-launcher
 
 # Fix for hantek wayland
 flatpak override --user --env=QT_QPA_PLATFORM=wayland org.openhantek.OpenHantek6022
