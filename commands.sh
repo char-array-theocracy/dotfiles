@@ -29,21 +29,27 @@ chown -R $username:$username /home/$username/.config/gtk-4.0
 chown -R $username:$username /home/$username/.config/gtk-3.0
 
 # Install base system
-xbps-install -Sy clang-tools-extra river Waybar tofi fzf mako libevdev wayland wayland-protocols wlroots libxkbcommon-devel dbus elogind polkit pixman mesa-dri vulkan-loader mesa-vulkan-radeon mesa-vaapi mesa-vdpau xf86-video-amdgpu curl mpd flatpak pipewire wireplumber libspa-bluetooth neovim Adapta papirus-icon-theme pavucontrol network-manager-applet wl-clipboard ffmpeg  yt-dlp wget nerd-fonts font-awesome6 lxappearance gvfs nemo setxkbmap kanshi ImageMagick ufw mate-polkit gtklock swww xorg-fonts fonts-roboto-ttf foot grim chromium base-devel bluez xdg-desktop-portal-gtk lm_sensors neofetch btop xbacklight libnotify thinkfan vscode fastfetch slurp swappy eog zathura zathura-pdf-mupdf zathura-ps zathura-djvu
+xbps-install -Sy clang-tools-extra river Waybar tofi fzf mako libevdev wayland wayland-protocols wlroots libxkbcommon-devel dbus elogind polkit pixman mesa-dri vulkan-loader mesa-vulkan-radeon mesa-vaapi mesa-vdpau xf86-video-amdgpu curl mpd flatpak pipewire wireplumber libspa-bluetooth neovim Adapta papirus-icon-theme pavucontrol network-manager-applet wl-clipboard ffmpeg  yt-dlp wget nerd-fonts font-awesome6 lxappearance gvfs nemo setxkbmap kanshi ImageMagick ufw mate-polkit gtklock swww xorg-fonts fonts-roboto-ttf foot grim chromium base-devel bluez xdg-desktop-portal-gtk lm_sensors neofetch btop xbacklight libnotify vscode fastfetch slurp swappy eog zathura zathura-pdf-mupdf zathura-ps zathura-djvu libvirt virt-manager virt-manager-tools qemu inotify-tools
 
-ln -s /etc/sv/polkitd /var/service/
+# Services
 ln -s /etc/sv/dbus /var/service/
+
+# Virtualization
+ln -s /etc/sv/libvirtd /var/service/
+ln -s /etc/sv/virtlockd /var/service/
+ln -s /etc/sv/virtlogd /var/service/
+
+# Other
+ln -s /etc/sv/polkitd /var/service/
 ln -s /etc/sv/bluetoothd /var/service/
 
-# Downloading anki and picard, adding them to binaries
+# Downloading flatpaks, adding them to binaries
 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-flatpak install -y flathub net.ankiweb.Anki com.github.tchx84.Flatseal md.obsidian.Obsidian org.wireshark.Wireshark org.openhantek.OpenHantek6022 org.torproject.torbrowser-launcher
+flatpak install -y flathub net.ankiweb.Anki com.github.tchx84.Flatseal org.wireshark.Wireshark org.openhantek.OpenHantek6022
 ln -s /var/lib/flatpak/exports/bin/net.ankiweb.Anki /usr/bin/anki
 ln -s /var/lib/flatpak/exports/bin/com.github.tchx84.Flatseal /usr/bin/flatseal
-ln -s /var/lib/flatpak/exports/bin/md.obsidian.Obsidian /usr/bin/obsidian
 ln -s /var/lib/flatpak/exports/bin/org.wireshark.Wireshark /usr/bin/wireshark
 ln -s /var/lib/flatpak/exports/bin/org.openhantek.OpenHantek6022 /usr/bin/hantek
-ln -s /var/lib/flatpak/exports/bin/org.torproject.torbrowser-launcher /usr/bin/torbrowser-launcher
 
 # Fix for hantek wayland
 flatpak override --user --env=QT_QPA_PLATFORM=wayland org.openhantek.OpenHantek6022
@@ -51,9 +57,6 @@ flatpak override --user --env=QT_QPA_PLATFORM=wayland org.openhantek.OpenHantek6
 # OpenHantek6022 udev fix
 mkdir -p /etc/udev/rules.d/
 cp /home/$username/dotfiles/resources/60-openhantek.rules /etc/udev/rules.d/
-
-# Install custom fonts
-mv /home/$username/dotfiles/fonts/*.ttf /usr/share/fonts/TTF/
 
 # Force wayland on all apps
 sed -i 's|exec /usr/bin/flatpak run|exec /usr/bin/flatpak run --socket=wayland|g' /var/lib/flatpak/exports/bin/*
@@ -69,8 +72,6 @@ echo "%video ALL=(ALL) NOPASSWD: /usr/bin/xbacklight" >> /etc/sudoers
 mkdir -p /etc/pipewire/pipewire.conf.d
 ln -s /usr/share/examples/wireplumber/10-wireplumber.conf /etc/pipewire/pipewire.conf.d/
 ln -s /usr/share/examples/pipewire/20-pipewire-pulse.conf /etc/pipewire/pipewire.conf.d/
-
-# --------------- Security -----------------
 
 # Setting up firewall
 ufw limit 22/tcp
@@ -92,7 +93,7 @@ ln -s /home/$username/dotfiles/tlp.conf /etc/
 tlp start
 ln -s /etc/sv/tlp /var/service/
 
-# Create the swapfile
+# Create and intialise the swapfile
 btrfs subvolume create /var/swap
 truncate -s 0 /var/swap/swapfile
 chattr +C /var/swap/swapfile
@@ -107,23 +108,6 @@ echo "/var/swap/swapfile none swap sw 0 0" >> /etc/fstab
 ROOT_UUID=$(blkid -s UUID -o value /dev/mapper/luks*)
 resume_offset=$(btrfs inspect-internal map-swapfile -r /var/swap/swapfile)
 sudo sed -i "/^GRUB_CMDLINE_LINUX_DEFAULT=/ s/\"$/ resume=UUID=$ROOT_UUID resume_offset=$resume_offset\"/" /etc/default/grub
-update-grub
-
-# Setting up snapper
-cd /
-xbps-install -Sy snapper grub-btrfs inotify-tools
-umount /.snapshots
-rm -r /.snapshots/
-snapper -c root create-config /
-btrfs subvolume delete /.snapshots
-mkdir /.snapshots
-mount -a
-btrfs subvolume list / 
-btrfs subvolume set-default 256 / 
-vim /etc/snapper/configs/root 
-chown -R :wheel /.snapshots
-ln -s /etc/sv/snapperd /var/service/
-snapper -c root create --description 'Post install'
 update-grub
 
 # Amd optimizations
