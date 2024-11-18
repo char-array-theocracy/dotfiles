@@ -106,6 +106,7 @@
       "max-length": 40
    },
    "river/tags": {
-      "num-tags": 9
+      "format": "{name}",
+      "num-tags": 7
    }
 }
