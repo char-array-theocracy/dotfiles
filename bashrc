@@ -11,6 +11,9 @@ export EDITOR=nvim
 export XDG_SESSION_TYPE=wayland
 export XDG_CURRENT_DESKTOP=river
 
+# Fix later 
+riverctl send-layout-cmd filtile "--tags all smart-padding 0"
+
 # Don't put duplicate lines in the history and do not add lines that start with a space
 export HISTCONTROL=erasedups:ignoredups:ignorespace
 

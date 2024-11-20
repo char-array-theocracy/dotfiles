@@ -9,6 +9,9 @@ call plug#begin()
   Plug 'ayu-theme/ayu-vim'
   Plug 'nvim-telescope/telescope.nvim'
   Plug 'nvim-lua/plenary.nvim'
+  Plug 'neovim/nvim-lspconfig'
+  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+  Plug 'justinmk/vim-cmake'
 call plug#end()
 ]])
 
@@ -156,3 +159,10 @@ function! ShowDocumentation()
   endif
 endfunction
 ]])
+
+-- Set up clangd for ESP-IDF with LSP
+require'lspconfig'.clangd.setup{
+    cmd = { "clangd", "--compile-commands-dir=build" },
+    root_dir = require'lspconfig'.util.root_pattern("CMakeLists.txt", ".git"),
+}
+
