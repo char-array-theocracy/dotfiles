@@ -7,12 +7,16 @@ set $up k
 set $right l
 set $term foot
 set $menu wmenu-run
+set $HOME_DIR $HOME
 
 ### Applications and Startup Programs ###
 exec_always --no-startup-id "pipewire"
 exec_always --no-startup-id "foot --server"
 exec_always --no-startup-id "kanshi"
 exec_always --no-startup-id "mako"
+exec --no-startup-id "chromium --app=https://open.spotify.com"
+for_window [class="Chromium" title="Spotify"] move to workspace 6
+exec --no-startup-id "chromium --app=https://to-do.live.com/tasks/"
 
 ### Idle ###
 exec swayidle -w \
@@ -25,12 +29,25 @@ font pango:Roboto 10
 ### Input Configuration ###
 input * repeat_delay 300
 input * repeat_rate 50
+input "type:keyboard" {
+    xkb_layout us,lt
+    xkb_options grp:alt_shift_toggle
+}
 
 ### Output Configuration ###
+# Certain workspaces on certain monitors
+workspace 1 output HDMI-A-1
+workspace 2 output HDMI-A-1
+workspace 3 output HDMI-A-1
+workspace 4 output eDP-1
+workspace 5 output HDMI-A-1
+workspace 6 output edP-1
+
+
 # Set default workspace layout
 workspace_layout tabbed
 # Background configuration (uncomment and modify as needed)
-# output * bg @datadir@/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+output * bg $HOME_DIR/Wallpapers/wallhaven-we99zx.jpg fill
 
 ### Key Bindings ###
 # Launch applications
@@ -39,6 +56,9 @@ bindsym $mod+p exec $menu
 bindsym $mod+Shift+c kill
 bindsym $mod+Shift+A exec sh -c 'grim -g "$(slurp)" - | swappy -f -'
 bindsym $mod+F1 exec "swaylock --color 000000"
+bindsym $mod+d exec code
+bindsym $mod+c exec chromium
+bindsym $mod+z exec pdf-reader.sh
 
 # Reload or exit Sway
 bindsym $mod+Shift+q reload

@@ -42,9 +42,9 @@ ln -s /etc/sv/bluetoothd /var/service/
 
 # Downloading flatpaks, adding them to binaries
 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+flatpak install flathub org.openhantek.OpenHantek6022 net.ankiweb.Anki com.github.tchx84.Flatseal 
 ln -s /var/lib/flatpak/exports/bin/net.ankiweb.Anki /usr/bin/anki
 ln -s /var/lib/flatpak/exports/bin/com.github.tchx84.Flatseal /usr/bin/flatseal
-ln -s /var/lib/flatpak/exports/bin/org.wireshark.Wireshark /usr/bin/wireshark
 ln -s /var/lib/flatpak/exports/bin/org.openhantek.OpenHantek6022 /usr/bin/hantek
 
 # Fix for hantek wayland
