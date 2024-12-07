@@ -26,7 +26,7 @@ chown -R $username:$username /home/$username/.config/gtk-4.0
 chown -R $username:$username /home/$username/.config/gtk-3.0
 
 # Install base system
-xbps-install -Sy clang-tools-extra sway swayidle swaylock fzf mako libevdev wayland wayland-protocols wlroots libxkbcommon-devel dbus elogind polkit pixman mesa-dri vulkan-loader mesa-vulkan-radeon mesa-vaapi mesa-vdpau xf86-video-amdgpu curl mpd flatpak pipewire wireplumber libspa-bluetooth neovim Adapta papirus-icon-theme pavucontrol network-manager-applet wl-clipboard ffmpeg  yt-dlp wget nerd-fonts font-awesome6 lxappearance gvfs nemo setxkbmap kanshi ImageMagick ufw mate-polkit xorg-fonts fonts-roboto-ttf foot grim chromium base-devel bluez xdg-desktop-portal-gtk lm_sensors neofetch btop xbacklight libnotify fastfetch slurp swappy eog zathura zathura-pdf-mupdf zathura-ps zathura-djvu libvirt virt-manager virt-manager-tools qemu inotify-tools vscode
+xbps-install -Sy clang-tools-extra sway swayidle swaylock fzf mako libevdev wayland wayland-protocols wlroots libxkbcommon-devel dbus elogind polkit pixman mesa-dri vulkan-loader mesa-vulkan-radeon mesa-vaapi mesa-vdpau xf86-video-amdgpu curl mpd flatpak pipewire wireplumber libspa-bluetooth neovim Adapta papirus-icon-theme pavucontrol network-manager-applet wl-clipboard ffmpeg  yt-dlp wget nerd-fonts font-awesome6 lxappearance gvfs nemo setxkbmap kanshi ImageMagick ufw mate-polkit xorg-fonts fonts-roboto-ttf foot grim chromium base-devel bluez xdg-desktop-portal-gtk lm_sensors neofetch btop xbacklight libnotify fastfetch slurp swappy eog zathura zathura-pdf-mupdf zathura-ps zathura-djvu libvirt virt-manager virt-manager-tools qemu inotify-tools vscode wmenu acpi
 
 # Services
 ln -s /etc/sv/dbus /var/service/

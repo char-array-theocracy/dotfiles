@@ -47,7 +47,7 @@ workspace 6 output edP-1
 # Set default workspace layout
 workspace_layout tabbed
 # Background configuration (uncomment and modify as needed)
-output * bg $HOME_DIR/Wallpapers/wallhaven-we99zx.jpg fill
+output * bg $HOME_DIR/Wallpapers/wallhaven-wekvj6.jpg fill
 
 ### Key Bindings ###
 # Launch applications
@@ -154,7 +154,7 @@ bindsym Print exec grim
 bar {
     position bottom
     font "Roboto 10"
-    status_command while date +'%Y-%m-%d %X'; do sleep 1; done
+    status_command status.sh
     colors {
         statusline #ffffff
         background #323232
