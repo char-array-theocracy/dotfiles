@@ -29,7 +29,6 @@ ln -s /home/$username/dotfiles/kanshi /home/$username/.config/
 ln -s /home/$username/dotfiles/fastfetch /home/$username/.config/
 ln -s /home/$username/dotfiles/zathura /home/$username/.config/
 ln -s /home/$username/dotfiles/bash_profile /home/$username/.bash_profile
-ln -s /home/$username/dotfiles/scripts/setup_macvtap.sh /usr/local/bin/
 
 ########################################
 # Theming and UI Fixes
@@ -43,8 +42,10 @@ chown -R $username:$username /home/$username/.config/gtk-{3.0,4.0}
 # Installing Base System Packages
 ########################################
 echo "Installing base system packages..."
+# CHANGED: Restored virtualization, xkb, clang tools, and base-devel
+# CHANGED: Removed mpd and yt-dlp
 xbps-install -Sy clang-tools-extra river fzf mako libevdev wayland wayland-protocols wlroots libxkbcommon-devel dbus elogind polkit pixman mesa-dri vulkan-loader mesa-vulkan-radeon mesa-vaapi mesa-vdpau xf86-video-amdgpu \
-  curl mpd flatpak pipewire wireplumber libspa-bluetooth neovim Adapta papirus-icon-theme pavucontrol network-manager-applet wl-clipboard ffmpeg yt-dlp wget nerd-fonts font-awesome6 lxappearance gvfs nemo setxkbmap kanshi ImageMagick \
+  curl flatpak pipewire wireplumber libspa-bluetooth neovim Adapta papirus-icon-theme pavucontrol network-manager-applet wl-clipboard ffmpeg wget nerd-fonts font-awesome6 lxappearance gvfs nemo setxkbmap kanshi ImageMagick \
   ufw mate-polkit xorg-fonts fonts-roboto-ttf foot grim chromium base-devel bluez xdg-desktop-portal-gtk lm_sensors neofetch btop xbacklight libnotify fastfetch slurp swappy eog zathura zathura-pdf-mupdf zathura-ps zathura-djvu \
   libvirt virt-manager virt-manager-tools qemu inotify-tools vscode acpi swaylock swayidle swww
 
@@ -108,7 +109,7 @@ ln -s /usr/share/examples/wireplumber/10-wireplumber.conf /etc/pipewire/pipewire
 ln -s /usr/share/examples/pipewire/20-pipewire-pulse.conf /etc/pipewire/pipewire.conf.d/
 
 ########################################
-# Firewall Setup
+# Firewall Setup (Hardening)
 ########################################
 echo "Configuring firewall with ufw..."
 ufw limit 22/tcp
@@ -154,41 +155,20 @@ sed -i "/^GRUB_CMDLINE_LINUX_DEFAULT=/ s/\"$/ resume=UUID=$ROOT_UUID resume_offs
 update-grub
 
 ########################################
-# AMD Optimizations
-########################################
-echo "Adding AMD optimizations to GRUB..."
-sed -i '/^GRUB_CMDLINE_LINUX_DEFAULT/s/"$/ radeon.dpm=1 amd_pstate=disable"/' /etc/default/grub
-update-grub
-
-########################################
 # Virtualization User Group Membership
 ########################################
 echo "Adding $username to libvirt and kvm groups..."
 usermod -aG libvirt,kvm $username
 
 ########################################
-# VM Networking Configuration via runit service
+# Remove Default libvirt NAT Network
 ########################################
-echo "Creating runit service for macvtap setup..."
-
-mkdir -p /etc/sv/setup_macvtap
-
-cat <<'EOF' > /etc/sv/setup_macvtap/run
-#!/bin/sh
-# This service runs the macvtap setup script once on boot.
-# After running, it touches a file to prevent reruns.
-
-if [ ! -f /tmp/setup_macvtap_done ]; then
-  /usr/local/bin/setup_macvtap.sh
-  touch /tmp/setup_macvtap_done
-fi
-
-# Keep the service running indefinitely, as runit expects a persistent process
-exec sleep 999999999
-EOF
-
-chmod +x /etc/sv/setup_macvtap/run
-ln -s /etc/sv/setup_macvtap /var/service/
+echo "Removing default NAT network from libvirt..."
+sv start libvirtd
+sleep 2
+virsh net-destroy default || true
+virsh net-undefine default || true
+sv stop libvirtd
 
 ########################################
 # Additional Security & Stability
@@ -251,9 +231,6 @@ echo "Additional security measures applied."
 echo "Enabling hugepages for better VM performance..."
 echo "vm.nr_hugepages=1024" >> /etc/sysctl.conf
 sysctl -p
-
-echo "Restarting libvirtd to apply changes..."
-sv restart libvirtd
 
 ########################################
 # Autologin Setup (Last Step)
