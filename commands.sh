@@ -29,6 +29,7 @@ ln -s /home/$username/dotfiles/kanshi /home/$username/.config/
 ln -s /home/$username/dotfiles/fastfetch /home/$username/.config/
 ln -s /home/$username/dotfiles/zathura /home/$username/.config/
 ln -s /home/$username/dotfiles/bash_profile /home/$username/.bash_profile
+ln -s /home/$username/dotfiles/scripts/setup_macvtap.sh /usr/local/bin/
 
 ########################################
 # Theming and UI Fixes
@@ -166,24 +167,28 @@ echo "Adding $username to libvirt and kvm groups..."
 usermod -aG libvirt,kvm $username
 
 ########################################
-# VM Networking Configuration
+# VM Networking Configuration via runit service
 ########################################
-echo "Disabling default libvirt network to avoid conflicts..."
-virsh net-destroy default || true
-virsh net-autostart default --disable || true
+echo "Creating runit service for macvtap setup..."
 
-echo "Enabling and configuring NetworkManager..."
-xbps-install -Sy NetworkManager iproute2 dhclient
-ln -s /etc/sv/NetworkManager /var/service/
+mkdir -p /etc/sv/setup_macvtap
 
-echo "Waiting for NetworkManager to initialize..."
-sleep 5
+cat <<'EOF' > /etc/sv/setup_macvtap/run
+#!/bin/sh
+# This service runs the macvtap setup script once on boot.
+# After running, it touches a file to prevent reruns.
 
-echo "Setting up macvtap0 interface on wlp3s0 for VM networking..."
-nmcli connection add type macvlan ifname macvtap0 con-name macvtap0 dev wlp3s0 mode bridge tap yes
-nmcli connection modify macvtap0 ipv4.method auto
-nmcli connection modify macvtap0 ipv6.method ignore
-nmcli connection up macvtap0
+if [ ! -f /tmp/setup_macvtap_done ]; then
+  /usr/local/bin/setup_macvtap.sh
+  touch /tmp/setup_macvtap_done
+fi
+
+# Keep the service running indefinitely, as runit expects a persistent process
+exec sleep 999999999
+EOF
+
+chmod +x /etc/sv/setup_macvtap/run
+ln -s /etc/sv/setup_macvtap /var/service/
 
 ########################################
 # Additional Security & Stability
