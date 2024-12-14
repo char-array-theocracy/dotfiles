@@ -11,7 +11,7 @@ chown -R $username:$username /home/$username
 rm /home/$username/.bashrc
 rm /home/$username/.bash_profile
 ln -s /home/$username/dotfiles/bashrc /home/$username/.bashrc
-ln -s /home/$username/dotfiles/sway /home/$username/.config/
+ln -s /home/$username/dotfiles/river /home/$username/.config/
 ln -s /home/$username/dotfiles/foot /home/$username/.config/
 ln -s /home/$username/dotfiles/mako /home/$username/.config/
 ln -s /home/$username/dotfiles/nvim /home/$username/.config/
@@ -26,7 +26,7 @@ chown -R $username:$username /home/$username/.config/gtk-4.0
 chown -R $username:$username /home/$username/.config/gtk-3.0
 
 # Install base system
-xbps-install -Sy clang-tools-extra sway swayidle swaylock fzf mako libevdev wayland wayland-protocols wlroots libxkbcommon-devel dbus elogind polkit pixman mesa-dri vulkan-loader mesa-vulkan-radeon mesa-vaapi mesa-vdpau xf86-video-amdgpu curl mpd flatpak pipewire wireplumber libspa-bluetooth neovim Adapta papirus-icon-theme pavucontrol network-manager-applet wl-clipboard ffmpeg  yt-dlp wget nerd-fonts font-awesome6 lxappearance gvfs nemo setxkbmap kanshi ImageMagick ufw mate-polkit xorg-fonts fonts-roboto-ttf foot grim chromium base-devel bluez xdg-desktop-portal-gtk lm_sensors neofetch btop xbacklight libnotify fastfetch slurp swappy eog zathura zathura-pdf-mupdf zathura-ps zathura-djvu libvirt virt-manager virt-manager-tools qemu inotify-tools vscode wmenu acpi
+xbps-install -Sy clang-tools-extra river fzf mako libevdev wayland wayland-protocols wlroots libxkbcommon-devel dbus elogind polkit pixman mesa-dri vulkan-loader mesa-vulkan-radeon mesa-vaapi mesa-vdpau xf86-video-amdgpu curl mpd flatpak pipewire wireplumber libspa-bluetooth neovim Adapta papirus-icon-theme pavucontrol network-manager-applet wl-clipboard ffmpeg  yt-dlp wget nerd-fonts font-awesome6 lxappearance gvfs nemo setxkbmap kanshi ImageMagick ufw mate-polkit xorg-fonts fonts-roboto-ttf foot grim chromium base-devel bluez xdg-desktop-portal-gtk lm_sensors neofetch btop xbacklight libnotify fastfetch slurp swappy eog zathura zathura-pdf-mupdf zathura-ps zathura-djvu libvirt virt-manager virt-manager-tools qemu inotify-tools vscode acpi swaylock swayidle swww
 
 # Services
 ln -s /etc/sv/dbus /var/service/

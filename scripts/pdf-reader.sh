@@ -3,7 +3,7 @@
 function open_document {
     files=$(ls ~/Documents)
 
-    selected=$(echo "$files" | wmenu "$@")
+    selected=$(echo "$files" | tofi "$@")
 
     if [[ -n $selected ]]; then
         zathura "$HOME/Documents/$selected"

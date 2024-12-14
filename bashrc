@@ -3,7 +3,7 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-export PATH="$PATH:$HOME/dotfiles/scripts"
+export PATH="$PATH:$HOME/dotfiles/scripts:$HOME/.cargo/bin"
 export HISTFILESIZE=10000
 export HISTSIZE=500
 export HISTTIMEFORMAT="%F %T | "
