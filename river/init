@@ -30,7 +30,7 @@ riverctl map normal Super C spawn chromium
 riverctl map normal Super Z spawn pdf-reader.sh
 riverctl map normal Super E spawn nemo  
 riverctl map normal Super+Shift A spawn 'grim -g "$(slurp)" - | swappy -f -'
-riverctl map normal Super + V spawn virt-manager --connect qemu:///system --show win11
+riverctl map normal Super V spawn start-virt.sh
 
 # Cursor Theme
 riverctl xcursor-theme Adwaita
