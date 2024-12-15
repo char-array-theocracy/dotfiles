@@ -16,7 +16,7 @@ padding-left = 1%
 padding-right = 0
 prompt-text = "run: "
 
-background-color = #000A
+background-color = #000B
 text-color = #c0caf5
 input-color = #7aa2f7
 selection-color = #7dcfff
