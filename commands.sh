@@ -48,7 +48,7 @@ echo "Installing base system packages..."
 xbps-install -Sy clang-tools-extra river fzf mako libevdev wayland wayland-protocols wlroots libxkbcommon-devel dbus elogind polkit pixman mesa-dri vulkan-loader mesa-vulkan-radeon mesa-vaapi mesa-vdpau xf86-video-amdgpu \
   curl flatpak pipewire wireplumber libspa-bluetooth neovim Adapta papirus-icon-theme pavucontrol network-manager-applet wl-clipboard ffmpeg wget nerd-fonts font-awesome6 lxappearance gvfs nemo setxkbmap kanshi ImageMagick \
   ufw mate-polkit xorg-fonts fonts-roboto-ttf foot grim chromium base-devel bluez xdg-desktop-portal-gtk lm_sensors neofetch btop xbacklight libnotify fastfetch slurp swappy eog zathura zathura-pdf-mupdf zathura-ps zathura-djvu \
-  libvirt virt-manager virt-manager-tools qemu inotify-tools vscode acpi swaylock swayidle swww swtpm
+  libvirt virt-manager virt-manager-tools qemu inotify-tools vscode acpi swaylock swayidle swww swtpm virt-viewer
 
 ########################################
 # Service Management
@@ -60,6 +60,7 @@ ln -s /etc/sv/dbus /var/service/
 ln -s /etc/sv/libvirtd /var/service/
 ln -s /etc/sv/virtlockd /var/service/
 ln -s /etc/sv/virtlogd /var/service/
+ln -s /etc/sv/virtqemud /var/service/
 
 # Other essential services
 ln -s /etc/sv/polkitd /var/service/
