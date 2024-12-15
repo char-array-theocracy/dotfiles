@@ -189,7 +189,7 @@ riverctl spawn-tagmask ${all_but_scratch_tag}
 
 # Set background and border colors
 riverctl background-color 0x002b36
-riverctl border-color-focused 0x93a1a1
+riverctl border-color-focused 0x7dcfff
 riverctl border-color-unfocused 0x586e75
 
 # Set keyboard repeat rate
