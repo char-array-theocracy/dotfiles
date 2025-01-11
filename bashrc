@@ -74,7 +74,7 @@ extract() {
 }
 
 function check_update() {
-	local SCRIPT_TO_RUN="update.sh"
+	local SCRIPT_TO_RUN="$HOME/dotfiles/scripts/update.sh"
 
 	local LAST_RUN_FILE="$HOME/.update_script_last_run"
 

@@ -13,3 +13,7 @@ profile {
     # External Monitor (to the left of the laptop screen)
     output "DP-1" mode 1920x1080@144Hz position 0,0 scale 1
 }
+
+profile {
+    output "DP-1" mode 1920x1080@144Hz position 0,0 scale 1
+}

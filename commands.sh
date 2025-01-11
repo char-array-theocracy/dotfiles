@@ -45,7 +45,7 @@ chown -R $username:$username /home/$username/.config/gtk-{3.0,4.0}
 echo "Installing base system packages..."
 # CHANGED: Restored virtualization, xkb, clang tools, and base-devel
 # CHANGED: Removed mpd and yt-dlp
-xbps-install -Sy clang-tools-extra river fzf mako libevdev wayland wayland-protocols wlroots libxkbcommon-devel dbus elogind polkit pixman mesa-dri vulkan-loader mesa-vulkan-radeon mesa-vaapi mesa-vdpau xf86-video-amdgpu \
+xbps-install -Sy clang-tools-extra river fzf mako libevdev wayland wayland-protocols wlroots libxkbcommon-devel dbus elogind polkit pixman mesa-dri vulkan-loader intel-video-accel linux-firmware-intel mesa-vulkan-intel \
   curl flatpak pipewire wireplumber libspa-bluetooth neovim Adapta papirus-icon-theme pavucontrol network-manager-applet wl-clipboard ffmpeg wget nerd-fonts font-awesome6 lxappearance gvfs nemo setxkbmap kanshi ImageMagick \
   ufw mate-polkit xorg-fonts fonts-roboto-ttf foot grim chromium base-devel bluez xdg-desktop-portal-gtk lm_sensors neofetch btop xbacklight libnotify fastfetch slurp swappy eog zathura zathura-pdf-mupdf zathura-ps zathura-djvu \
   libvirt virt-manager virt-manager-tools qemu inotify-tools vscode acpi swaylock swayidle swww swtpm virt-viewer
@@ -71,12 +71,13 @@ ln -s /etc/sv/bluetoothd /var/service/
 ########################################
 echo "Setting up flatpaks..."
 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-flatpak install -y flathub org.openhantek.OpenHantek6022 net.ankiweb.Anki com.github.tchx84.Flatseal
+flatpak install -y flathub org.openhantek.OpenHantek6022 net.ankiweb.Anki com.github.tchx84.Flatseal com.valvesoftware.Steam 
 
 echo "Linking flatpak binaries to system PATH..."
 ln -s /var/lib/flatpak/exports/bin/net.ankiweb.Anki /usr/bin/anki
 ln -s /var/lib/flatpak/exports/bin/com.github.tchx84.Flatseal /usr/bin/flatseal
 ln -s /var/lib/flatpak/exports/bin/org.openhantek.OpenHantek6022 /usr/bin/hantek
+ln -s /var/lib/flatpak/exports/bin/com.valvesoftware.Steam /usr/bin/steam
 
 echo "Configuring Wayland environment for Hantek flatpak..."
 flatpak override --user --env=QT_QPA_PLATFORM=wayland org.openhantek.OpenHantek6022
@@ -129,12 +130,12 @@ echo "sshd: ALL" >> /etc/hosts.deny
 ########################################
 # Power Management with TLP
 ########################################
-echo "Installing and configuring TLP..."
-xbps-install -Sy tlp tlp-rdw smartmontools ethtool
-rm -f /etc/tlp.conf
-ln -s /home/$username/dotfiles/tlp.conf /etc/
-tlp start
-ln -s /etc/sv/tlp /var/service/
+# echo "Installing and configuring TLP..."
+# xbps-install -Sy tlp tlp-rdw smartmontools ethtool
+# rm -f /etc/tlp.conf
+# ln -s /home/$username/dotfiles/tlp.conf /etc/
+# tlp start
+# ln -s /etc/sv/tlp /var/service/
 
 ########################################
 # Swap and Hibernation
