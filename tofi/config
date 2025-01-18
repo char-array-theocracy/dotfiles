@@ -7,7 +7,7 @@ anchor = center
 width = 30%
 height = 60%
 outline-width = 0
-border-width = 1
+border-width = 2
 min-input-width = 130
 result-spacing = 15
 padding-top = 0%
@@ -16,12 +16,12 @@ padding-left = 1%
 padding-right = 0
 prompt-text = "run: "
 
-background-color = #000B
-text-color = #c0caf5
-input-color = #7aa2f7
-selection-color = #7dcfff
-border-color = #7dcfff
-selection-match-color = #9ece6a
+background-color = #eff1f5DD
+text-color = #4c4f69
+input-color = #4c4f69
+selection-color = #12757a
+border-color = #179299
+selection-match-color = #179299
 
 clip-to-padding = false
 require-match = false

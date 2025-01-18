@@ -48,7 +48,7 @@ echo "Installing base system packages..."
 xbps-install -Sy clang-tools-extra river fzf mako libevdev wayland wayland-protocols wlroots libxkbcommon-devel dbus elogind polkit pixman mesa-dri vulkan-loader intel-video-accel linux-firmware-intel mesa-vulkan-intel \
   curl flatpak pipewire wireplumber libspa-bluetooth neovim Adapta papirus-icon-theme pavucontrol network-manager-applet wl-clipboard ffmpeg wget nerd-fonts font-awesome6 lxappearance gvfs nemo setxkbmap kanshi ImageMagick \
   ufw mate-polkit xorg-fonts fonts-roboto-ttf foot grim chromium base-devel bluez xdg-desktop-portal-gtk lm_sensors neofetch btop xbacklight libnotify fastfetch slurp swappy eog zathura zathura-pdf-mupdf zathura-ps zathura-djvu \
-  libvirt virt-manager virt-manager-tools qemu inotify-tools vscode acpi swaylock swayidle swww swtpm virt-viewer
+  libvirt virt-manager virt-manager-tools qemu inotify-tools vscode acpi swaylock swayidle swww swtpm virt-viewer zig
 
 ########################################
 # Service Management

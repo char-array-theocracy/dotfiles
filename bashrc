@@ -3,13 +3,14 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-export PATH="$PATH:$HOME/dotfiles/scripts:$HOME/.cargo/bin"
+export PATH="$PATH:$HOME/dotfiles/scripts:$HOME/.local/bin"
 export HISTFILESIZE=10000
 export HISTSIZE=500
 export HISTTIMEFORMAT="%F %T | "
 export EDITOR=nvim
 export XDG_SESSION_TYPE=wayland
 export XDG_CURRENT_DESKTOP=river
+export CC=clang
 
 # Don't put duplicate lines in the history and do not add lines that start with a space
 export HISTCONTROL=erasedups:ignoredups:ignorespace

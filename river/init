@@ -16,10 +16,11 @@ riverctl spawn swww-daemon
 riverctl spawn nm-applet
 riverctl spawn mako
 riverctl spawn "/usr/libexec/polkit-mate-authentication-agent-1"
+riverctl spawn "$HOME/.config/river/status"
+riverctl spawn "$HOME/.config/river/bar"
 
 # Applications Keybindings
 riverctl map normal Super+Shift Return spawn footclient
-riverctl map normal Super Q spawn systemInfo.sh
 riverctl map normal Super P spawn launch-tofi
 riverctl map normal Super X spawn keyboardswitcher.sh
 riverctl map normal Super A spawn bluetooth.sh
@@ -64,13 +65,13 @@ riverctl map normal Super+Shift Comma send-to-output previous
 # Bump focused view to top
 riverctl map normal Super Return zoom
 
-# Adjust main ratio (filtile)
-riverctl map normal Super H send-layout-cmd filtile "main-ratio -0.05"
-riverctl map normal Super L send-layout-cmd filtile "main-ratio +0.05"
+# Adjust main ratio (rivercarro)
+riverctl map normal Super H send-layout-cmd rivercarro "main-ratio -0.05"
+riverctl map normal Super L send-layout-cmd rivercarro "main-ratio +0.05"
 
-# Adjust main count (filtile)
-riverctl map normal Super+Shift H send-layout-cmd filtile "main-count +1"
-riverctl map normal Super+Shift L send-layout-cmd filtile "main-count -1"
+# Adjust main count (rivercarro)
+riverctl map normal Super+Shift H send-layout-cmd rivercarro "main-count +1"
+riverctl map normal Super+Shift L send-layout-cmd rivercarro "main-count -1"
 
 # Move views
 riverctl map normal Super+Alt H move left 100
@@ -126,18 +127,18 @@ riverctl map normal Super Space toggle-float
 riverctl map normal Super F toggle-fullscreen
 
 # Change layout orientation
-riverctl map normal Super Up    send-layout-cmd filtile "main-location top"
-riverctl map normal Super Right send-layout-cmd filtile "main-location right"
-riverctl map normal Super Down  send-layout-cmd filtile "main-location bottom"
-riverctl map normal Super Left  send-layout-cmd filtile "main-location left"
+riverctl map normal Super Up    send-layout-cmd rivercarro "main-location top"
+riverctl map normal Super Right send-layout-cmd rivercarro "main-location right"
+riverctl map normal Super Down  send-layout-cmd rivercarro "main-location bottom"
+riverctl map normal Super Left  send-layout-cmd rivercarro "main-location left"
 
-# Adjust gaps (filtile)
-riverctl map normal Super O          send-layout-cmd filtile "outer-padding +1"
-riverctl map normal Super+Shift O    send-layout-cmd filtile "outer-padding -1"
-riverctl map normal Super I          send-layout-cmd filtile "view-padding +1"
-riverctl map normal Super+Shift I    send-layout-cmd filtile "view-padding -1"
-riverctl map normal Super U          send-layout-cmd filtile "smart-padding +1"
-riverctl map normal Super+Shift U    send-layout-cmd filtile "smart-padding -1"
+# Adjust gaps (rivercarro)
+riverctl map normal Super O          send-layout-cmd rivercarro "outer-padding +1"
+riverctl map normal Super+Shift O    send-layout-cmd rivercarro "outer-padding -1"
+riverctl map normal Super I          send-layout-cmd rivercarro "view-padding +1"
+riverctl map normal Super+Shift I    send-layout-cmd rivercarro "view-padding -1"
+riverctl map normal Super U          send-layout-cmd rivercarro "smart-padding +1"
+riverctl map normal Super+Shift U    send-layout-cmd rivercarro "smart-padding -1"
 
 # ---- Passthrough Mode ----
 
@@ -189,8 +190,8 @@ riverctl spawn-tagmask ${all_but_scratch_tag}
 
 # Set background and border colors
 riverctl background-color 0x002b36
-riverctl border-color-focused 0x7dcfff
-riverctl border-color-unfocused 0x586e75
+riverctl border-color-focused 0x179299
+riverctl border-color-unfocused 0x0b494c
 
 # Set keyboard repeat rate
 riverctl set-repeat 50 300
@@ -201,25 +202,7 @@ riverctl set-repeat 50 300
 # riverctl rule-add -app-id 'float*' -title 'foo' float
 # riverctl rule-add -app-id "bar" csd
 
-# ---- Layout ----
+# Set the default layout generator to rivercarro and start it
+riverctl default-layout rivercarro
 
-# Set all smart padding to 0
-for output in $(riverctl list-outputs | awk '{print $1}'); do
-    for tag in $(seq 1 9); do
-        riverctl send-layout-cmd "$output:$tag" filtile "smart-padding 0"
-    done
-done
-
-# Set the default layout generator to filtile and start it
-riverctl default-layout filtile
-
-filtile &
-
-for output in HDMI-A-1 eDP-1; do
-    for tag in $(seq 1 9); do
-        riverctl send-layout-cmd filtile "--output $output --tags $tag outer-padding 0"
-        riverctl send-layout-cmd filtile "--output $output --tags $tag smart-padding 0"
-        riverctl send-layout-cmd filtile "--output $output --tags $tag inner-padding 0"
-    done
-done
-
+rivercarro -outer-gaps 0 -per-tag &
