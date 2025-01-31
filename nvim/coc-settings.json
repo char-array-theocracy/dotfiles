@@ -1,0 +1,15 @@
+{
+  "zig.enabled": true,
+  "zig.startUpMessage": true,
+  "zig.path": "zls",
+  "zig.debugLog": false,
+  "inlayHint.enable": false,
+  "clangd.fallbackFlags": [
+    "-std=c99",
+    "-x",
+    "c"
+  ],
+  "filesystem.associations": {
+    "*.h": "c"
+  }
+}

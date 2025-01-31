@@ -6,12 +6,11 @@ call plug#begin()
   Plug 'itchyny/lightline.vim'
   Plug 'ziglang/zig.vim'
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  Plug 'ayu-theme/ayu-vim'
+  Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
   Plug 'nvim-telescope/telescope.nvim'
   Plug 'nvim-lua/plenary.nvim'
   Plug 'neovim/nvim-lspconfig'
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-  Plug 'justinmk/vim-cmake'
 call plug#end()
 ]])
 
@@ -62,10 +61,10 @@ vim.cmd('syntax on')
 -- Set colorscheme to Ayu
 vim.g.ayucolor = "dark"
 vim.o.background = "dark"
-vim.cmd('colorscheme ayu')
+vim.cmd.colorscheme "catppuccin-latte"
 
 -- Lightline configuration
-vim.g.lightline = { colorscheme = 'ayu' }
+vim.g.lightline = { colorscheme = 'PaperColor' }
 
 -- Disable Zig autosave formatting
 vim.g.zig_fmt_autosave = 0
@@ -78,36 +77,6 @@ vim.api.nvim_set_keymap('n', '<leader>e', ':TransparentToggle<CR>', { noremap = 
 -- Cursor settings for foot terminal
 vim.o.guicursor = "n-v-c:block,i:ver25"
 
--- Function to toggle Ayu theme
-function ToggleAyuTheme()
-    local current_theme = vim.g.ayucolor or "dark"
-    local themes = { "dark", "mirage", "light" }
-    local next_theme_index = 1
-
-    for i, theme in ipairs(themes) do
-        if theme == current_theme then
-            next_theme_index = i % #themes + 1
-            break
-        end
-    end
-
-    local next_theme = themes[next_theme_index]
-    vim.g.ayucolor = next_theme
-
-    if next_theme == "light" then
-        vim.o.background = "light"
-    else
-        vim.o.background = "dark"
-    end
-
-    vim.cmd('colorscheme ayu')
-    print("Switched to Ayu " .. next_theme:gsub("^%l", string.upper))
-end
-
--- Keybinding to toggle Ayu theme
-vim.api.nvim_set_keymap('n', '<leader>s', ':lua ToggleAyuTheme()<CR>', { noremap = true, silent = true })
-
--- Additional improvements (as before)
 -- Enable true colors
 vim.o.termguicolors = true
 

@@ -27,7 +27,7 @@ riverctl map normal Super A spawn bluetooth.sh
 riverctl map normal Super D spawn code
 riverctl map normal Super F1 spawn swaylock
 riverctl map normal Super F4 spawn powermenu.sh
-riverctl map normal Super C spawn chromium
+riverctl map normal Super C spawn firefox
 riverctl map normal Super Z spawn pdf-reader.sh
 riverctl map normal Super E spawn nemo  
 riverctl map normal Super+Shift A spawn 'grim -g "$(slurp)" - | swappy -f -'
@@ -189,9 +189,9 @@ riverctl spawn-tagmask ${all_but_scratch_tag}
 # ---- Appearance ----
 
 # Set background and border colors
-riverctl background-color 0x002b36
-riverctl border-color-focused 0x179299
-riverctl border-color-unfocused 0x0b494c
+riverctl background-color 0x282828
+riverctl border-color-focused 0xd55d0e
+riverctl border-color-unfocused 0x3c3837
 
 # Set keyboard repeat rate
 riverctl set-repeat 50 300
@@ -205,4 +205,4 @@ riverctl set-repeat 50 300
 # Set the default layout generator to rivercarro and start it
 riverctl default-layout rivercarro
 
-rivercarro -outer-gaps 0 -per-tag &
+rivercarro -outer-gaps 1 -inner-gaps 1 -per-tag &

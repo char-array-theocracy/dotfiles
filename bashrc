@@ -3,7 +3,7 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-export PATH="$PATH:$HOME/dotfiles/scripts:$HOME/.local/bin"
+export PATH="$PATH:$HOME/dotfiles/scripts:$HOME/.local/bin:$HOME/emsdk:$HOME/emsdk/upstream/emscripten"
 export HISTFILESIZE=10000
 export HISTSIZE=500
 export HISTTIMEFORMAT="%F %T | "
@@ -36,7 +36,7 @@ alias yt-mp3='yt-dlp -f bestaudio --extract-audio --audio-quality 0 --audio-form
 alias update-all='sudo xbps-install -Su && flatpak update'
 alias ls='ls --color=auto'
 alias sudovim='sudo -E vim'
-PS1='\u\[\e[1;36m\]@\h❄ \w\ $ \[\e[0m\]'
+PS1='\u\[\e[1;38;5;202m\]@\h \w\ $ \[\e[0m\]'
 alias espshell='previous_dir=$(pwd) && cd /home/$USER/esp-idf/ && . ./export.sh && cd "$previous_dir"'
 alias cp='cp -i'
 alias mv='mv -i'
@@ -82,7 +82,7 @@ function check_update() {
 	local CURRENT_DATE=$(date +%s)
 
 	local INTERVAL=$((2 * 24 * 60 * 60))
-	local BLUE=$'\033[1;36m'   
+    local ORANGE=$'\e[1;38;5;202m'
 	local RESET=$'\033[0m'
 
 	local LAST_RUN_DATE=0
@@ -94,13 +94,13 @@ function check_update() {
 	local TIME_DIFF=$((CURRENT_DATE - LAST_RUN_DATE))
 
 	if (( TIME_DIFF >= INTERVAL )); then
-		local PROMPT="${BLUE}❄ Do you want to update? (y/n):${RESET} "
+		local PROMPT="${ORANGE}→ Do you want to update? (y/n):${RESET} "
 		read -p "$PROMPT" response
 		if [[ "$response" =~ ^[Yy]$ ]]; then
 		    sudo "$SCRIPT_TO_RUN"
 		    echo "$CURRENT_DATE" > "$LAST_RUN_FILE"
 	else
-	    echo "${BLUE}❄ Update skipped.${RESET} "
+	    echo "${ORANGE}→ Update skipped.${RESET} "
 		fi
 	fi
 }
