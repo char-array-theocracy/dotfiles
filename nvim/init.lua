@@ -6,7 +6,6 @@ call plug#begin()
   Plug 'itchyny/lightline.vim'
   Plug 'ziglang/zig.vim'
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
   Plug 'nvim-telescope/telescope.nvim'
   Plug 'nvim-lua/plenary.nvim'
   Plug 'neovim/nvim-lspconfig'
@@ -61,10 +60,10 @@ vim.cmd('syntax on')
 -- Set colorscheme to Ayu
 vim.g.ayucolor = "dark"
 vim.o.background = "dark"
-vim.cmd.colorscheme "catppuccin-latte"
+vim.cmd.colorscheme "tempus_future"
 
 -- Lightline configuration
-vim.g.lightline = { colorscheme = 'PaperColor' }
+vim.g.lightline = { colorscheme = 'one' }
 
 -- Disable Zig autosave formatting
 vim.g.zig_fmt_autosave = 0
