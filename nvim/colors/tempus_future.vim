@@ -98,7 +98,7 @@ hi LineNr guibg=#2b1329 guifg=#a7a2c4 term=none ctermbg=8 ctermfg=7
 hi Cursor guibg=#b4abac guifg=#090a18 ctermbg=15 ctermfg=0
 hi CursorLine gui=none guibg=#2b1329 term=none cterm=none ctermbg=8
 hi CursorColumn gui=none guibg=#2b1329 term=none cterm=none ctermbg=8
-hi CursorLineNr gui=bold guibg=#a7a2c4 guifg=#090a18 cterm=bold ctermbg=7 ctermfg=0
+hi CursorLineNr gui=bold guibg=#a7a2c4 guifg=#a7a2c4 cterm=bold ctermbg=7 ctermfg=0
 hi ColorColumn guibg=#2b1329 guifg=#b4abac term=none ctermbg=8 ctermfg=15
 hi SignColumn guibg=#2b1329 guifg=#a7a2c4 term=none ctermbg=8 ctermfg=7
 
@@ -252,3 +252,5 @@ hi SyntasticError gui=undercurl guisp=#ff7e8f cterm=underline
 hi SyntasticWarning gui=undercurl guisp=#bfa51a cterm=underline
 hi SyntasticErrorSing guifg=#090a18 guibg=#ff7e8f ctermfg=0 ctermbg=1
 hi SyntasticWarningSign guifg=#090a18 guibg=#bfa51a ctermfg=0 ctermbg=3
+
+

@@ -57,8 +57,6 @@ vim.g.clipboard = {
 vim.cmd('filetype plugin indent on')
 vim.cmd('syntax on')
 
--- Set colorscheme to Ayu
-vim.g.ayucolor = "dark"
 vim.o.background = "dark"
 vim.cmd.colorscheme "tempus_future"
 

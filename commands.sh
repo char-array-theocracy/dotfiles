@@ -46,7 +46,7 @@ echo "Installing base system packages..."
 xbps-install -Sy clang-tools-extra river fzf mako libevdev wayland wayland-protocols wlroots libxkbcommon-devel dbus elogind polkit pixman mesa-dri vulkan-loader intel-video-accel linux-firmware-intel mesa-vulkan-intel \
   curl flatpak pipewire wireplumber libspa-bluetooth neovim pavucontrol network-manager-applet wl-clipboard ffmpeg wget nerd-fonts font-awesome6 lxappearance setxkbmap kanshi ImageMagick \
   ufw mate-polkit xorg-fonts fonts-roboto-ttf foot grim base-devel bluez xdg-desktop-portal-gtk lm_sensors neofetch btop xbacklight libnotify fastfetch slurp swappy eog zathura zathura-pdf-mupdf zathura-ps zathura-djvu \
-  libvirt virt-manager virt-manager-tools qemu inotify-tools vscode acpi swaylock swayidle swww swtpm virt-viewer zig sandbar firefox imv tofi
+  libvirt virt-manager virt-manager-tools qemu inotify-tools acpi swaylock swayidle swww swtpm virt-viewer zig sandbar firefox imv tofi yazi
 
 ########################################
 # Service Management
@@ -59,6 +59,7 @@ ln -s /etc/sv/libvirtd /var/service/
 ln -s /etc/sv/virtlockd /var/service/
 ln -s /etc/sv/virtlogd /var/service/
 ln -s /etc/sv/virtqemud /var/service/
+ln -s /etc/sv/virtstoraged /var/service/
 
 # Other essential services
 ln -s /etc/sv/polkitd /var/service/
@@ -98,8 +99,8 @@ xbps-reconfigure -f fontconfig
 ########################################
 # Hardware Specific Fixes
 ########################################
-echo "Configuring backlight fix..."
-echo "%video ALL=(ALL) NOPASSWD: /usr/bin/xbacklight" >> /etc/sudoers
+# echo "Configuring backlight fix..."
+# echo "%video ALL=(ALL) NOPASSWD: /usr/bin/xbacklight" >> /etc/sudoers
 
 ########################################
 # Pipewire Configuration
@@ -138,22 +139,22 @@ echo "sshd: ALL" >> /etc/hosts.deny
 ########################################
 # Swap and Hibernation
 ########################################
-echo "Creating and initializing swapfile..."
-btrfs subvolume create /var/swap
-truncate -s 0 /var/swap/swapfile
-chattr +C /var/swap/swapfile
-btrfs property set /var/swap compression none
-chmod 600 /var/swap/swapfile
-dd if=/dev/zero of=/var/swap/swapfile bs=1G count=20 status=progress
-mkswap /var/swap/swapfile
-swapon /var/swap/swapfile
-echo "/var/swap/swapfile none swap sw 0 0" >> /etc/fstab
-
-echo "Setting up hibernation resume parameters..."
-ROOT_UUID=$(blkid -s UUID -o value /dev/mapper/luks*)
-resume_offset=$(btrfs inspect-internal map-swapfile -r /var/swap/swapfile)
-sed -i "/^GRUB_CMDLINE_LINUX_DEFAULT=/ s/\"$/ resume=UUID=$ROOT_UUID resume_offset=$resume_offset\"/" /etc/default/grub
-update-grub
+# echo "Creating and initializing swapfile..."
+# btrfs subvolume create /var/swap
+# truncate -s 0 /var/swap/swapfile
+# chattr +C /var/swap/swapfile
+# btrfs property set /var/swap compression none
+# chmod 600 /var/swap/swapfile
+# dd if=/dev/zero of=/var/swap/swapfile bs=1G count=20 status=progress
+# mkswap /var/swap/swapfile
+# swapon /var/swap/swapfile
+# echo "/var/swap/swapfile none swap sw 0 0" >> /etc/fstab
+#
+# echo "Setting up hibernation resume parameters..."
+# ROOT_UUID=$(blkid -s UUID -o value /dev/mapper/luks*)
+# resume_offset=$(btrfs inspect-internal map-swapfile -r /var/swap/swapfile)
+# sed -i "/^GRUB_CMDLINE_LINUX_DEFAULT=/ s/\"$/ resume=UUID=$ROOT_UUID resume_offset=$resume_offset\"/" /etc/default/grub
+# update-grub
 
 ########################################
 # Virtualization User Group Membership
@@ -220,9 +221,9 @@ xbps-install -Sy chrony
 ln -s /etc/sv/chronyd /var/service/ || true
 
 # AMD Microcode Updates
-echo "Installing AMD microcode updates..."
-xbps-install -Sy amd-ucode
-update-grub
+# echo "Installing AMD microcode updates..."
+# xbps-install -Sy amd-ucode
+# update-grub
 
 echo "Additional security measures applied."
 
